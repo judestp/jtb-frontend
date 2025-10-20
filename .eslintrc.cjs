@@ -5,7 +5,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  env: {browser: true, es2020: true},
+  env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
     'plugin:react-hooks/recommended',
@@ -43,7 +43,7 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': [
       'warn',
-      {allowConstantExport: true},
+      { allowConstantExport: true },
     ],
 
     //
@@ -70,7 +70,7 @@ module.exports = {
     // 'max-depth': ['error', 4],
     // 'max-lines': ['error', 300],
     'react/jsx-props-no-spreading': 'error',
-    'react/jsx-filename-extension': [1, {extensions: ['.tsx']}],
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
   },
