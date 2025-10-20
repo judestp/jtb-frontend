@@ -11,7 +11,6 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
-import importPlugin from 'eslint-plugin-import';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,7 +24,7 @@ export default [
   {
     ignores: [
       '**/dist',
-      '**/eslint.config.js', // Comment out for Next.js to prevent "The Next.js plugin was not detected in your ESLint configuration" error
+      '**/eslint.config.js',
       '**/vite.config.ts',
       '**/vitest.config.ts',
       '**/tailwind.config.js',
@@ -46,8 +45,8 @@ export default [
       'plugin:@typescript-eslint/stylistic-type-checked',
       'plugin:react/recommended',
       'plugin:jsx-a11y/recommended',
-      // 'next/core-web-vitals', // Next.js
-      // 'next/typescript', // Next.js
+      'next/core-web-vitals', // Uncomment this for Next.js
+      'next/typescript', // Uncomment this for Next.js
     ),
   ),
   {
@@ -58,7 +57,7 @@ export default [
       'react-hooks': fixupPluginRules(reactHooks),
       'jsx-a11y': fixupPluginRules(jsxA11Y),
       'no-type-assertion': noTypeAssertion,
-      import: importPlugin,
+      // import: importPlugin, // Comment this out for Next.js since it's already imported in next/core-web-vitals
     },
 
     languageOptions: {
@@ -77,8 +76,8 @@ export default [
 
         project: [
           './tsconfig.json',
-          // './tsconfig.app.json', // Comment out for Next.js
-          // './tsconfig.node.json', // Comment out for Next.js
+          // './tsconfig.app.json', // Comment this out for Next.js
+          // './tsconfig.node.json', // Comment this out for Next.js
         ],
         tsconfigRootDir: __dirname,
       },
