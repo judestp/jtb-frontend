@@ -2,6 +2,7 @@
   "name": "jtb-frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -16,7 +17,9 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.4.0",
     "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9.38.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -29,11 +32,15 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.6",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-no-type-assertion": "^1.3.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.4.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "prettier": "^3.6.2",

@@ -9,7 +9,13 @@ function Home() {
     <div style={{ zoom: '500%', textAlign: 'center' }}>
       <h1>JTB Front End</h1>
       <div>
-        <button onClick={(): void => setCount((count: number) => count + 1)}>
+        <button
+          onClick={(): void => {
+            setCount((count: number) => {
+              return count + 1;
+            });
+          }}
+        >
           count is {count}
         </button>
       </div>
