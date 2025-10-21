@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 import '@/styles/scss/main.scss';
-import Login from '@/components/Login.tsx';
-import User from '@/components/User.tsx';
+import UnlockPasswordReset from '@/components/UnlockPasswordReset.tsx';
+import UserSearch from '@/components/UserSearch.tsx';
 
 const pages = {
-  Login,
-  User,
+  UnlockPasswordReset,
+  UserSearch,
 } as const;
 
 type PageKey = keyof typeof pages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>('Login');
+  const [currentPage, setCurrentPage] = useState<PageKey>('UnlockPasswordReset');
 
   const isKeyOf = <T extends object>(
     obj: T,
