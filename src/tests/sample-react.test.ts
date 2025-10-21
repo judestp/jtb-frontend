@@ -9,7 +9,7 @@ interface IHelloProps {
 }
 
 function Hello(props: IHelloProps) {
-  return createElement('h1', null, 'Hello, ' + String(props.name));
+  return createElement('h1', null, `Hello, ${props.name}`);
 }
 
 describe('Hello', () => {
