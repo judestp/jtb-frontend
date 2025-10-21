@@ -1,9 +1,5 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+import { fixupConfigRules } from '@eslint/compat';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import react from 'eslint-plugin-react';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import reactHooks from 'eslint-plugin-react-hooks';
-import jsxA11Y from 'eslint-plugin-jsx-a11y';
 import noTypeAssertion from 'eslint-plugin-no-type-assertion';
 import globals from 'globals';
 import tsParser from '@typescript-eslint/parser';
@@ -21,6 +17,7 @@ const compat = new FlatCompat({
 });
 
 export default [
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     ignores: [
       '**/dist',
@@ -40,22 +37,20 @@ export default [
   ...fixupConfigRules(
     compat.extends(
       'eslint:recommended',
-      'plugin:react-hooks/recommended',
-      'plugin:@typescript-eslint/strict-type-checked',
-      'plugin:@typescript-eslint/stylistic-type-checked',
-      'plugin:react/recommended',
-      'plugin:jsx-a11y/recommended',
-      'next/core-web-vitals', // Uncomment this for Next.js
-      'next/typescript', // Uncomment this for Next.js
+      // 'plugin:react-hooks/recommended',
+      // 'plugin:@typescript-eslint/strict-type-checked',
+      // 'plugin:@typescript-eslint/stylistic-type-checked',
+      // 'plugin:react/recommended',
+      // 'plugin:jsx-a11y/recommended',
     ),
   ),
   {
     plugins: {
       'react-refresh': reactRefresh,
-      react: fixupPluginRules(react),
-      '@typescript-eslint': fixupPluginRules(typescriptEslint),
-      'react-hooks': fixupPluginRules(reactHooks),
-      'jsx-a11y': fixupPluginRules(jsxA11Y),
+      // react: fixupPluginRules(react),
+      // '@typescript-eslint': fixupPluginRules(typescriptEslint),
+      // 'react-hooks': fixupPluginRules(reactHooks),
+      // 'jsx-a11y': fixupPluginRules(jsxA11Y),
       'no-type-assertion': noTypeAssertion,
       // import: importPlugin, // Comment this out for Next.js since it's already imported in next/core-web-vitals
     },
