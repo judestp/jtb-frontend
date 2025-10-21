@@ -8,7 +8,7 @@
     "test": "bun test --watch",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.5",
