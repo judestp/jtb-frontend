@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import '@/styles/scss/main.scss';
-import Login from '@/components/Login';
-import User from '@/components/User';
+import Login from '@/components/Login.tsx';
+import User from '@/components/User.tsx';
 
 const pages = {
   Login,
