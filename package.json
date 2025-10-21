@@ -11,18 +11,22 @@
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.15",
     "@tanstack/react-query": "^5.90.5",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.12.2",
     "next": "15.5.6",
+    "postcss": "^8.5.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "sass": "^1.93.2",
+    "tailwindcss": "^4.1.15"
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.0",
     "@eslint/eslintrc": "^3",
     "@eslint/js": "^9.38.0",
     "@happy-dom/global-registrator": "^20.0.7",
-    "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -48,7 +52,6 @@
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
