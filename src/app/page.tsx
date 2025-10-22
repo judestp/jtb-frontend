@@ -10,18 +10,26 @@ import LanguageSelector from '@/components/LanguageSelector/LanguageSelector.tsx
 import '@/i18n.ts';
 
 const pages = {
-  UnlockPasswordReset,
-  UserSearch,
-  Login,
+  public: {
+    Login,
+  },
+  private: {
+    UserSearch,
+    UnlockPasswordReset,
+  },
 } as const;
 
-type PageKey = keyof typeof pages;
+const allPages = {
+  ...pages.public,
+  ...pages.private,
+} as const;
+
+type PageKey = keyof typeof allPages;
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageKey>(
-    'UnlockPasswordReset',
+    'Login',
   );
-  
 
   const isKeyOf = <T extends object>(
     obj: T,
@@ -34,7 +42,10 @@ function App() {
     setCurrentPage(page);
   };
 
-  const CurrentPageComponent = pages[currentPage];
+  const CurrentPageComponent = allPages[currentPage];
+  const isPrivate = ((): boolean => {
+    return currentPage in pages.private;
+  })();
 
   return (
     <div className="grid grid-cols-[auto_1fr] h-screen">
@@ -43,23 +54,24 @@ function App() {
         aria-label="Component navigation"
       >
         <div>
-          {Object.keys(pages).map((page) => {
-            if (isKeyOf(pages, page)) {
+          {Object.keys(allPages).map((page) => {
+            if (isKeyOf(allPages, page)) {
+              const key = page as PageKey;
               return (
                 <div
-                  key={page}
+                  key={key}
                   className={`cursor-pointer p-2 hover:bg-gray-200 font-bold ${
-                    currentPage === page ? 'bg-gray-200' : ''
+                    currentPage === key ? 'bg-gray-200' : ''
                   }`}
                   onClick={() => {
-                    handleNavigation(page);
+                    handleNavigation(key);
                   }}
                   role="button"
                   tabIndex={0}
                   onKeyDown={() => null}
-                  aria-label={page}
+                  aria-label={key}
                 >
-                  {page.charAt(0).toUpperCase() + page.slice(1)}
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
                 </div>
               );
             }
@@ -70,13 +82,15 @@ function App() {
       </aside>
 
       <div className="main-content relative h-screen overflow-y-auto">
-        <JtbHeader
-          onSubItemClick={(key) => {
-            if (key === 'UnlockPasswordReset') {
-              handleNavigation('UnlockPasswordReset');
-            }
-          }}
-        />
+        {isPrivate ? (
+          <JtbHeader
+            onSubItemClick={(key) => {
+              if (key === 'UnlockPasswordReset') {
+                handleNavigation('UnlockPasswordReset');
+              }
+            }}
+          />
+        ) : null}
         <div className="px-6 pt-4 pb-8">
           <CurrentPageComponent />
         </div>
