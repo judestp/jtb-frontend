@@ -74,7 +74,7 @@ export default function Login({
               'bg-white',
               'border',
               'border-gray-200',
-              'rounded-lg',
+              // 'rounded-lg',
               'shadow-sm',
               'h-full',
               'flex',
