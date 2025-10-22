@@ -6,6 +6,7 @@ export interface IJTBLogoProps {
   width?: number;
   height?: number;
   invert?: boolean;
+  zoom?: number;
 }
 
 export default function JTBLogo({
@@ -13,6 +14,7 @@ export default function JTBLogo({
   width = 61,
   height = 35,
   invert = false,
+  zoom = 1,
 }: IJTBLogoProps): JSX.Element {
   const classes = [
     'block',
@@ -24,13 +26,17 @@ export default function JTBLogo({
     .filter((c): c is string => typeof c === 'string' && c.length > 0)
     .join(' ');
 
+  const scale = zoom > 0 ? zoom : 1;
+  const renderedWidth = Math.round(width * scale);
+  const renderedHeight = Math.round(height * scale);
+
   return (
     <Image
       className={classes}
       src="/jtb-logo.png"
       alt="JTB Logo"
-      width={width}
-      height={height}
+      width={renderedWidth}
+      height={renderedHeight}
     />
   );
 }

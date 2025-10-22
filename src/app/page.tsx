@@ -6,7 +6,7 @@ import UnlockPasswordReset from '@/components/UnlockPasswordReset/UnlockPassword
 import UserSearch from '@/components/UserSearch/UserSearch.tsx';
 import Login from '@/components/Login/Login.tsx';
 import JtbHeader from '@/components/Header/Header.tsx';
-import { useTranslation } from 'react-i18next';
+import LanguageSelector from '@/components/LanguageSelector/LanguageSelector.tsx';
 import '@/i18n.ts';
 
 const pages = {
@@ -18,8 +18,10 @@ const pages = {
 type PageKey = keyof typeof pages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>('UnlockPasswordReset');
-  const { i18n } = useTranslation();
+  const [currentPage, setCurrentPage] = useState<PageKey>(
+    'UnlockPasswordReset',
+  );
+  
 
   const isKeyOf = <T extends object>(
     obj: T,
@@ -64,6 +66,7 @@ function App() {
             return null;
           })}
         </div>
+        <LanguageSelector className="mt-4" />
       </aside>
 
       <div className="main-content relative h-screen overflow-y-auto">
@@ -76,22 +79,6 @@ function App() {
         />
         <div className="px-6 pt-4 pb-8">
           <CurrentPageComponent />
-          <div className="absolute left-6 bottom-6 z-10">
-            <label htmlFor="language-select" className="block text-xs font-semibold text-gray-600 mb-1">
-              Language
-            </label>
-            <select
-              id="language-select"
-              value={i18n.language && i18n.language.startsWith('ja') ? 'ja' : 'en'}
-              onChange={(e) => {
-                void i18n.changeLanguage(e.target.value);
-              }}
-              className="w-40 border border-gray-300 bg-white text-sm rounded-md px-2 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="en">English</option>
-              <option value="ja">日本語</option>
-            </select>
-          </div>
         </div>
       </div>
     </div>
