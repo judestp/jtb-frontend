@@ -4,6 +4,7 @@ import { useState } from 'react';
 import '@/styles/scss/main.scss';
 import UnlockPasswordReset from '@/components/UnlockPasswordReset.tsx';
 import UserSearch from '@/components/UserSearch.tsx';
+import JtbHeader from '@/components/JTBHeader.tsx';
 
 const pages = {
   UnlockPasswordReset,
@@ -13,7 +14,9 @@ const pages = {
 type PageKey = keyof typeof pages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>('UnlockPasswordReset');
+  const [currentPage, setCurrentPage] = useState<PageKey>(
+    'UnlockPasswordReset',
+  );
 
   const isKeyOf = <T extends object>(
     obj: T,
@@ -30,7 +33,10 @@ function App() {
 
   return (
     <div className="grid grid-cols-[auto_1fr] h-screen">
-      <div className="border-r border-gray-300 p-4 bg-gray-100 w-auto flex flex-col justify-between">
+      <aside
+        className="border-r border-gray-300 p-4 bg-gray-100 w-auto flex flex-col justify-between"
+        aria-label="Component navigation"
+      >
         <div>
           {Object.keys(pages).map((page) => {
             if (isKeyOf(pages, page)) {
@@ -55,10 +61,19 @@ function App() {
             return null;
           })}
         </div>
-      </div>
+      </aside>
 
-      <div className="p-8">
-        <CurrentPageComponent />
+      <div className="main-content h-screen overflow-y-auto">
+        <JtbHeader
+          onSubItemClick={(key) => {
+            if (key === 'UnlockPasswordReset') {
+              handleNavigation('UnlockPasswordReset');
+            }
+          }}
+        />
+        <div className="px-6 pt-4 pb-8">
+          <CurrentPageComponent />
+        </div>
       </div>
     </div>
   );
