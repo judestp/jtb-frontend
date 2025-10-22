@@ -247,7 +247,7 @@ export default function UserSearch({
             'hover:bg-gray-50',
           )}
         >
-          Cancel
+          {t('actions.cancel')}
         </button>
       </div>
     </section>
