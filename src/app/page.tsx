@@ -56,7 +56,7 @@ function App() {
         <div>
           {Object.keys(allPages).map((page) => {
             if (isKeyOf(allPages, page)) {
-              const key = page as PageKey;
+              const key = page;
               return (
                 <div
                   key={key}
