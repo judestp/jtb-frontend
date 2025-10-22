@@ -1,0 +1,10 @@
+---
+description: Linting and formatting standards
+globs: ["eslint.config.js", "src/**", "prettier*", "**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+## Linting & formatting
+- ESLint: Flat config `eslint.config.js` with Next, TypeScript, React Hooks.
+- Scope: Lint `src/**`; ignore build outputs and tool configs.
+- Prettier 3: default formatting, no project-level overrides.
+- ESLint is blocking; fix warnings and errors before commit/PR.

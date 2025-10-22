@@ -1,0 +1,22 @@
+---
+description: Core coding conventions and naming for jtb-frontend
+globs: ["**/*"]
+alwaysApply: true
+---
+## General conventions
+- File paths: Prefer absolute imports using alias `@/*` (maps to `./src/*`).
+- Import extensions: Always include `.ts`/`.tsx` in imports.
+- No enums; use object literals instead.
+- No `alert`.
+- No `console` except `console.warn` and `console.error`.
+- Object shorthand required where possible.
+- Curly braces required for all control statements.
+- Type assertions are disallowed.
+- TypeScript strict mode and `strictNullChecks` are required.
+- Use explicit boolean checks.
+
+## Naming conventions
+- Functions: `camelCase` or `PascalCase` (same for exported).
+- Classes: `PascalCase`.
+- Type-like (types, interfaces, generics): `PascalCase`.
+- Interfaces: `PascalCase` with `I` prefix (e.g., `IUser`).

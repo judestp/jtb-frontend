@@ -2,6 +2,7 @@
 
 import React, { useCallback, useMemo, useState } from 'react';
 import type { JSX } from 'react';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import '@/i18n.ts';
 
@@ -68,12 +69,6 @@ export default function UserSearch({
     });
   }, [query, rows, scope]);
 
-  const joinClassNames = (items: Array<string | undefined>): string => {
-    return items
-      .filter((c): c is string => typeof c === 'string' && c.length > 0)
-      .join(' ');
-  };
-
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -83,7 +78,7 @@ export default function UserSearch({
 
   return (
     <section
-      className={joinClassNames([
+      className={clsx(
         'bg-white',
         'border',
         'border-gray-200',
@@ -92,7 +87,7 @@ export default function UserSearch({
         'p-6',
         'md:p-8',
         className,
-      ])}
+      )}
     >
       <h2 className="text-3xl font-bold text-gray-800">{t('pages.userSearch')}</h2>
 
@@ -104,7 +99,7 @@ export default function UserSearch({
             setQuery(e.target.value ?? '');
           }}
           placeholder={t('fields.placeholder')}
-          className={joinClassNames([
+          className={clsx(
             'flex-1',
             'rounded-md',
             'border',
@@ -119,13 +114,13 @@ export default function UserSearch({
             'focus:outline-none',
             'focus:ring-2',
             'focus:ring-blue-500',
-          ])}
+          )}
           aria-label={t('pages.userSearch')}
         />
 
         <button
           type="submit"
-          className={joinClassNames([
+          className={clsx(
             'rounded-md',
             'bg-blue-600',
             'px-5',
@@ -137,7 +132,7 @@ export default function UserSearch({
             'focus:outline-none',
             'focus:ring-2',
             'focus:ring-blue-500',
-          ])}
+          )}
           aria-label="Search"
         >
           {t('actions.search')}
@@ -231,7 +226,7 @@ export default function UserSearch({
               onCancel();
             }
           }}
-          className={joinClassNames([
+          className={clsx(
             'rounded-md',
             'border',
             'border-gray-300',
@@ -242,7 +237,7 @@ export default function UserSearch({
             'text-gray-700',
             'shadow-sm',
             'hover:bg-gray-50',
-          ])}
+          )}
         >
           Cancel
         </button>

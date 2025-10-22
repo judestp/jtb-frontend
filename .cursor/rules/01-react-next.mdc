@@ -1,0 +1,14 @@
+---
+description: React and Next.js authoring rules
+globs: ["src/**/*.tsx", "next.config.ts"]
+alwaysApply: false
+---
+## React/Next.js
+- Place components in `src/components/**`; use `.tsx` files.
+- Add `'use client'` when using client-only APIs/hooks.
+- Follow Rules of Hooks; include exhaustive-deps.
+- JSX:
+  - No prop spreading.
+  - JSX only in `.tsx`.
+  - Component names in `PascalCase`.
+- Next config: `next.config.ts` uses `devIndicators: false`.

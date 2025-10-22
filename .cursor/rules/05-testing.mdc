@@ -1,0 +1,10 @@
+---
+description: Testing approach and tools
+globs: ["**/*.test.ts", "**/*.test.tsx", "vitest.config.ts", "jest.config.ts", "package.json"]
+alwaysApply: false
+---
+## Testing
+- Default runner: `bun test` (Browser-like `jsdom` environment).
+- Prefer `@testing-library/react` and `@testing-library/jest-dom` for assertions.
+- Vitest: aliases and jsdom configured in `vitest.config.ts`.
+- Jest config exists for Next compatibility (`jest.config.ts`), not default in scripts.

@@ -2,6 +2,7 @@
 
 import React, { useCallback, useState } from 'react';
 import type { JSX } from 'react';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import '@/i18n.ts';
 
@@ -27,12 +28,6 @@ export default function UnlockPasswordReset({
   const [query, setQuery] = useState<string>(defaultValue);
   const { t } = useTranslation(['common', 'upr']);
 
-  const joinClassNames = (items: Array<string | undefined>): string => {
-    return items
-      .filter((c): c is string => typeof c === 'string' && c.length > 0)
-      .join(' ');
-  };
-
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -57,7 +52,7 @@ export default function UnlockPasswordReset({
 
   return (
     <section
-      className={joinClassNames([
+      className={clsx(
         'bg-white',
         'border',
         'border-gray-200',
@@ -66,7 +61,7 @@ export default function UnlockPasswordReset({
         'p-6',
         'md:p-8',
         className,
-      ])}
+      )}
     >
       <h2 className="text-2xl font-bold text-gray-800">{t('pages.unlockPasswordReset')}</h2>
 
@@ -87,7 +82,7 @@ export default function UnlockPasswordReset({
               setQuery(e.target.value ?? '');
             }}
             placeholder={t('fields.placeholder')}
-            className={joinClassNames([
+            className={clsx(
               'flex-1',
               'rounded-md',
               'border',
@@ -102,13 +97,13 @@ export default function UnlockPasswordReset({
               'focus:outline-none',
               'focus:ring-2',
               'focus:ring-blue-500',
-            ])}
+            )}
             aria-label="Target Users"
           />
 
           <button
             type="submit"
-            className={joinClassNames([
+            className={clsx(
               'rounded-md',
               'bg-blue-600',
               'px-5',
@@ -120,7 +115,7 @@ export default function UnlockPasswordReset({
               'focus:outline-none',
               'focus:ring-2',
               'focus:ring-blue-500',
-            ])}
+            )}
             aria-label="Search"
           >
             {t('actions.search')}
@@ -133,7 +128,7 @@ export default function UnlockPasswordReset({
           type="button"
           onClick={handleExecute}
           disabled={!canExecute}
-          className={joinClassNames([
+          className={clsx(
             'rounded-md',
             'px-5',
             'py-3',
@@ -142,7 +137,7 @@ export default function UnlockPasswordReset({
             canExecute
               ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500'
               : 'bg-blue-200 text-white cursor-not-allowed',
-          ])}
+          )}
         >
           {t('actions.execute')}
         </button>
@@ -150,7 +145,7 @@ export default function UnlockPasswordReset({
         <button
           type="button"
           onClick={handleCancel}
-          className={joinClassNames([
+          className={clsx(
             'rounded-md',
             'border',
             'border-gray-300',
@@ -161,7 +156,7 @@ export default function UnlockPasswordReset({
             'text-gray-700',
             'shadow-sm',
             'hover:bg-gray-50',
-          ])}
+          )}
         >
           {t('actions.cancel')}
         </button>

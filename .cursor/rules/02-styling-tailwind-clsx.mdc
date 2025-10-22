@@ -1,0 +1,11 @@
+---
+description: Styling with Tailwind, PostCSS, SCSS, and clsx
+globs: ["src/**/*.tsx", "src/styles/**", "tailwind.config.js", "postcss.config.js"]
+alwaysApply: false
+---
+## Styling
+- Prefer Tailwind utility classes for styling.
+- Tailwind content scanning: `./src/**/*.{js,ts,jsx,tsx}`.
+- PostCSS plugins: `@tailwindcss/postcss`, `autoprefixer`.
+- SCSS entry: `src/styles/scss/main.scss` with `@use 'tailwindcss';`.
+- Class composition: Use `clsx`; avoid custom helpers.

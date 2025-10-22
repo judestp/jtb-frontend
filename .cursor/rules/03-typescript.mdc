@@ -1,0 +1,12 @@
+---
+description: TypeScript config and usage
+globs: ["**/*.ts", "**/*.tsx", "tsconfig.json"]
+alwaysApply: false
+---
+## TypeScript
+- Module resolution: `bundler`; `allowImportingTsExtensions: true`.
+- Paths: `@/*` → `./src/*`.
+- JSX: `react-jsx`.
+- Emit: `noEmit: true` (Next builds).
+- Avoid `any`.
+- Enforce strict boolean expressions.

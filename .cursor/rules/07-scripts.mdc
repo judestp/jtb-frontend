@@ -1,0 +1,11 @@
+---
+description: Project scripts and common tasks
+globs: ["package.json"]
+alwaysApply: false
+---
+## Project scripts
+- Dev: `npm run dev` → Next dev with Turbopack.
+- Build: `npm run build` → Next build with Turbopack.
+- Start: `npm run start`.
+- Lint: `npm run lint` (fails on warnings > 0).
+- Test: `npm run test` (Bun runner, non-interactive when needed).

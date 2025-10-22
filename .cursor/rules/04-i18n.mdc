@@ -1,0 +1,9 @@
+---
+description: i18n usage with i18next and react-i18next
+globs: ["src/**/*.tsx", "src/**/*.ts", "src/**/locales/**"]
+alwaysApply: false
+---
+## i18n
+- Initialize translations by importing `@/i18n.ts` in components using i18n.
+- Use `useTranslation([...namespaces])`.
+- Provide accessible labels/aria (e.g., `aria-label`).
