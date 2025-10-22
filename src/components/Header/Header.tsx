@@ -2,7 +2,9 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import type { JSX } from 'react';
-import JTBLogo from '@/components/JTBLogo.tsx';
+import JTBLogo from '@/components/Logo.tsx';
+import { useTranslation } from 'react-i18next';
+import '@/i18n.ts';
 
 export interface IMenuItem {
   key: string;
@@ -24,6 +26,7 @@ export default function JtbHeader({
   onTopChange,
   onSubItemClick,
 }: IJtbHeaderProps): JSX.Element {
+  const { t } = useTranslation(['common', 'header']);
   const [openMenuKey, setOpenMenuKey] = useState<string | null>(null);
 
   const join = (xs: Array<string | undefined>): string => {
@@ -34,27 +37,27 @@ export default function JtbHeader({
 
   const topMenus = useMemo<IMenuItem[]>(() => {
     return [
-      { key: 'Management', label: 'Management' },
-      { key: 'GroupQuote', label: 'Group Quote' },
-      { key: 'TourInformation', label: 'Tour Information' },
-      { key: 'DocumentManagement', label: 'Document Management' },
-      { key: 'ApprovalRequest', label: 'Approval Request' },
-      { key: 'Reports', label: 'Reports' },
+      { key: 'Management', label: t('app.management') },
+      { key: 'GroupQuote', label: t('app.groupQuote') },
+      { key: 'TourInformation', label: t('app.tourInformation') },
+      { key: 'DocumentManagement', label: t('app.documentManagement') },
+      { key: 'ApprovalRequest', label: t('app.approvalRequest') },
+      { key: 'Reports', label: t('app.reports') },
     ];
-  }, []);
+  }, [t]);
 
   const managementItems = useMemo<IMenuItem[]>(() => {
     return [
-      { key: 'Master', label: 'Master' },
-      { key: 'Setting', label: 'Setting' },
-      { key: 'UserId', label: 'User ID' },
-      { key: 'UnlockPasswordReset', label: 'Lock Release/\nPassword Reset' },
+      { key: 'Master', label: t('header:managementItems.master', { defaultValue: 'Master' }) },
+      { key: 'Setting', label: t('header:managementItems.setting', { defaultValue: 'Setting' }) },
+      { key: 'UserId', label: t('header:managementItems.userId', { defaultValue: 'User ID' }) },
+      { key: 'UnlockPasswordReset', label: t('header:managementItems.unlockPasswordReset', { defaultValue: 'Lock Release/Password Reset' }) },
       {
         key: 'DepartmentGroupInfoApp',
-        label: 'Department/\nGroup\nInformation\nApplication',
+        label: t('header:managementItems.departmentGroupInfoApp', { defaultValue: 'Department/Group Information Application' }),
       },
     ];
-  }, []);
+  }, [t]);
 
   const handleTopClick = useCallback(
     (key: string) => {

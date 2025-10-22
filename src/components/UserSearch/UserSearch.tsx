@@ -2,6 +2,8 @@
 
 import React, { useCallback, useMemo, useState } from 'react';
 import type { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
+import '@/i18n.ts';
 
 interface IUserRow {
   id: string;
@@ -21,12 +23,13 @@ export interface IUserSearchProps {
 
 export default function UserSearch({
   className,
-  placeholder = 'Placeholder',
+  placeholder: _placeholder = 'Placeholder',
   defaultValue = '',
   onCancel,
 }: IUserSearchProps): JSX.Element {
   const [query, setQuery] = useState<string>(defaultValue);
   const [scope, setScope] = useState<'name' | 'all'>('all');
+  const { t } = useTranslation(['common', 'userSearch']);
   const [rows] = useState<IUserRow[]>([
     {
       id: '1',
@@ -91,7 +94,7 @@ export default function UserSearch({
         className,
       ])}
     >
-      <h2 className="text-3xl font-bold text-gray-800">User Search</h2>
+      <h2 className="text-3xl font-bold text-gray-800">{t('pages.userSearch')}</h2>
 
       <form onSubmit={handleSubmit} className="mt-6 flex items-center gap-4">
         <input
@@ -100,7 +103,7 @@ export default function UserSearch({
           onChange={(e) => {
             setQuery(e.target.value ?? '');
           }}
-          placeholder={placeholder}
+          placeholder={t('fields.placeholder')}
           className={joinClassNames([
             'flex-1',
             'rounded-md',
@@ -117,7 +120,7 @@ export default function UserSearch({
             'focus:ring-2',
             'focus:ring-blue-500',
           ])}
-          aria-label="Search users"
+          aria-label={t('pages.userSearch')}
         />
 
         <button
@@ -137,7 +140,7 @@ export default function UserSearch({
           ])}
           aria-label="Search"
         >
-          Search
+          {t('actions.search')}
         </button>
       </form>
 
@@ -153,7 +156,7 @@ export default function UserSearch({
             }}
             className="h-4 w-4"
           />
-          <span className="text-sm">Name</span>
+          <span className="text-sm">{t('fields.name')}</span>
         </label>
         <label className="inline-flex items-center gap-2 text-gray-700">
           <input
@@ -166,7 +169,7 @@ export default function UserSearch({
             }}
             className="h-4 w-4"
           />
-          <span className="text-sm font-semibold">All Fields</span>
+          <span className="text-sm font-semibold">{t('fields.allFields')}</span>
         </label>
 
         <button
@@ -176,18 +179,18 @@ export default function UserSearch({
           }}
           className="ml-auto text-sm font-semibold text-blue-700 hover:underline"
         >
-          Clear Search Result
+          {t('actions.clearSearch')}
         </button>
       </div>
 
       <div className="mt-8">
-        <div className="text-gray-700 font-semibold">User</div>
+        <div className="text-gray-700 font-semibold">{t('fields.user')}</div>
 
         <div className="mt-3 overflow-hidden rounded-md border border-gray-200">
           <table className="w-full border-collapse">
             <thead className="bg-gray-100">
               <tr className="text-left text-gray-700">
-                {['Name', 'Company', 'Location', 'Section', 'Group'].map((h) => {
+                {[t('fields.name'), t('fields.company'), t('fields.location'), t('fields.section'), t('fields.group')].map((h) => {
                   return (
                     <th key={h} className="px-6 py-3 font-semibold">
                       <div className="flex items-center gap-2">

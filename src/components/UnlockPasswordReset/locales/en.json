@@ -1,0 +1,11 @@
+{
+  "title": "Unlock/Password Reset",
+  "targetUsers": "Target Users",
+  "placeholder": "Placeholder",
+  "actions": {
+    "search": "Search",
+    "execute": "Execute",
+    "cancel": "Cancel"
+  }
+}
+

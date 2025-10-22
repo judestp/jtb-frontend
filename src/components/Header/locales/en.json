@@ -1,0 +1,19 @@
+{
+  "logoAlt": "JTB Logo",
+  "menus": {
+    "management": "Management",
+    "groupQuote": "Group Quote",
+    "tourInformation": "Tour Information",
+    "documentManagement": "Document Management",
+    "approvalRequest": "Approval Request",
+    "reports": "Reports"
+  },
+  "managementItems": {
+    "master": "Master",
+    "setting": "Setting",
+    "userId": "User ID",
+    "unlockPasswordReset": "Lock Release/Password Reset",
+    "departmentGroupInfoApp": "Department/Group Information Application"
+  }
+}
+

@@ -1,0 +1,32 @@
+{
+  "app": {
+    "management": "管理",
+    "groupQuote": "団体見積",
+    "tourInformation": "ツアー情報",
+    "documentManagement": "ドキュメント管理",
+    "approvalRequest": "承認依頼",
+    "reports": "レポート"
+  },
+  "actions": {
+    "search": "検索",
+    "execute": "実行",
+    "cancel": "キャンセル",
+    "clearSearch": "検索結果をクリア"
+  },
+  "fields": {
+    "targetUsers": "対象ユーザー",
+    "placeholder": "プレースホルダー",
+    "name": "氏名",
+    "allFields": "すべての項目",
+    "company": "会社",
+    "location": "所在地",
+    "section": "部署",
+    "group": "グループ",
+    "user": "ユーザー"
+  },
+  "pages": {
+    "unlockPasswordReset": "ロック解除/パスワードリセット",
+    "userSearch": "ユーザー検索"
+  }
+}
+

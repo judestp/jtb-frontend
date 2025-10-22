@@ -1,0 +1,32 @@
+{
+  "app": {
+    "management": "Management",
+    "groupQuote": "Group Quote",
+    "tourInformation": "Tour Information",
+    "documentManagement": "Document Management",
+    "approvalRequest": "Approval Request",
+    "reports": "Reports"
+  },
+  "actions": {
+    "search": "Search",
+    "execute": "Execute",
+    "cancel": "Cancel",
+    "clearSearch": "Clear Search Result"
+  },
+  "fields": {
+    "targetUsers": "Target Users",
+    "placeholder": "Placeholder",
+    "name": "Name",
+    "allFields": "All Fields",
+    "company": "Company",
+    "location": "Location",
+    "section": "Section",
+    "group": "Group",
+    "user": "User"
+  },
+  "pages": {
+    "unlockPasswordReset": "Unlock/Password Reset",
+    "userSearch": "User Search"
+  }
+}
+

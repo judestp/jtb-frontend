@@ -1,0 +1,19 @@
+{
+  "logoAlt": "JTB ロゴ",
+  "menus": {
+    "management": "管理",
+    "groupQuote": "団体見積",
+    "tourInformation": "ツアー情報",
+    "documentManagement": "ドキュメント管理",
+    "approvalRequest": "承認依頼",
+    "reports": "レポート"
+  },
+  "managementItems": {
+    "master": "マスター",
+    "setting": "設定",
+    "userId": "ユーザーID",
+    "unlockPasswordReset": "ロック解除/パスワードリセット",
+    "departmentGroupInfoApp": "所属/グループ情報申請"
+  }
+}
+

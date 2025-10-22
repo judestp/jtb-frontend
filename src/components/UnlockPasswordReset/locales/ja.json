@@ -1,0 +1,11 @@
+{
+  "title": "ロック解除/パスワードリセット",
+  "targetUsers": "対象ユーザー",
+  "placeholder": "プレースホルダー",
+  "actions": {
+    "search": "検索",
+    "execute": "実行",
+    "cancel": "キャンセル"
+  }
+}
+

@@ -1,0 +1,22 @@
+{
+  "title": "User Search",
+  "placeholder": "Placeholder",
+  "radios": {
+    "name": "Name",
+    "allFields": "All Fields"
+  },
+  "actions": {
+    "search": "Search",
+    "clear": "Clear Search Result",
+    "cancel": "Cancel"
+  },
+  "table": {
+    "user": "User",
+    "name": "Name",
+    "company": "Company",
+    "location": "Location",
+    "section": "Section",
+    "group": "Group"
+  }
+}
+

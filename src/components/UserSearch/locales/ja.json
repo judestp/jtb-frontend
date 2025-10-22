@@ -1,0 +1,22 @@
+{
+  "title": "ユーザー検索",
+  "placeholder": "プレースホルダー",
+  "radios": {
+    "name": "氏名",
+    "allFields": "すべての項目"
+  },
+  "actions": {
+    "search": "検索",
+    "clear": "検索結果をクリア",
+    "cancel": "キャンセル"
+  },
+  "table": {
+    "user": "ユーザー",
+    "name": "氏名",
+    "company": "会社",
+    "location": "所在地",
+    "section": "部署",
+    "group": "グループ"
+  }
+}
+

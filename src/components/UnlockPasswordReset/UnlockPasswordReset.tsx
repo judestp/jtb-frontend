@@ -2,6 +2,8 @@
 
 import React, { useCallback, useState } from 'react';
 import type { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
+import '@/i18n.ts';
 
 export interface IUnlockPasswordResetProps {
   className?: string;
@@ -15,7 +17,7 @@ export interface IUnlockPasswordResetProps {
 
 export default function UnlockPasswordReset({
   className,
-  placeholder = 'Placeholder',
+  placeholder: _placeholder = 'Placeholder',
   defaultValue = '',
   canExecute = false,
   onSearch,
@@ -23,6 +25,7 @@ export default function UnlockPasswordReset({
   onCancel,
 }: IUnlockPasswordResetProps): JSX.Element {
   const [query, setQuery] = useState<string>(defaultValue);
+  const { t } = useTranslation(['common', 'upr']);
 
   const joinClassNames = (items: Array<string | undefined>): string => {
     return items
@@ -65,14 +68,14 @@ export default function UnlockPasswordReset({
         className,
       ])}
     >
-      <h2 className="text-2xl font-bold text-gray-800">Unlock/Password Reset</h2>
+      <h2 className="text-2xl font-bold text-gray-800">{t('pages.unlockPasswordReset')}</h2>
 
       <div className="mt-6">
         <label
           htmlFor="upr-target-users"
           className="block text-sm font-semibold text-gray-700"
         >
-          Target Users
+          {t('fields.targetUsers')}
         </label>
 
         <form onSubmit={handleSubmit} className="mt-2 flex items-center gap-4">
@@ -83,7 +86,7 @@ export default function UnlockPasswordReset({
             onChange={(e) => {
               setQuery(e.target.value ?? '');
             }}
-            placeholder={placeholder}
+            placeholder={t('fields.placeholder')}
             className={joinClassNames([
               'flex-1',
               'rounded-md',
@@ -120,7 +123,7 @@ export default function UnlockPasswordReset({
             ])}
             aria-label="Search"
           >
-            Search
+            {t('actions.search')}
           </button>
         </form>
       </div>
@@ -141,7 +144,7 @@ export default function UnlockPasswordReset({
               : 'bg-blue-200 text-white cursor-not-allowed',
           ])}
         >
-          Execute
+          {t('actions.execute')}
         </button>
 
         <button
@@ -160,7 +163,7 @@ export default function UnlockPasswordReset({
             'hover:bg-gray-50',
           ])}
         >
-          Cancel
+          {t('actions.cancel')}
         </button>
       </div>
     </section>
