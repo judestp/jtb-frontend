@@ -48,7 +48,7 @@ export default function JtbHeader({
       { key: 'Master', label: 'Master' },
       { key: 'Setting', label: 'Setting' },
       { key: 'UserId', label: 'User ID' },
-      { key: 'UnlockPasswordReset', label: 'Lock Release/\$Password Reset' },
+      { key: 'UnlockPasswordReset', label: 'Lock Release/\nPassword Reset' },
       {
         key: 'DepartmentGroupInfoApp',
         label: 'Department/\nGroup\nInformation\nApplication',
