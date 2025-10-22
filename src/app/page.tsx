@@ -27,9 +27,7 @@ const allPages = {
 type PageKey = keyof typeof allPages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>(
-    'Login',
-  );
+  const [currentPage, setCurrentPage] = useState<PageKey>('Login');
 
   const isKeyOf = <T extends object>(
     obj: T,
@@ -91,9 +89,7 @@ function App() {
             }}
           />
         ) : null}
-        <div className="px-6 pt-4 pb-8">
-          <CurrentPageComponent />
-        </div>
+        <CurrentPageComponent />
       </div>
     </div>
   );
