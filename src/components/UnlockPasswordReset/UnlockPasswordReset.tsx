@@ -63,7 +63,11 @@ export default function UnlockPasswordReset({
         className,
       )}
     >
-      <h2 className="text-2xl font-bold text-gray-800">{t('pages.unlockPasswordReset')}</h2>
+      <h1 className="text-blue-700">Sugar</h1>
+
+      <h2 className="text-2xl font-bold text-gray-800">
+        {t('pages.unlockPasswordReset')}
+      </h2>
 
       <div className="mt-6">
         <label
@@ -164,5 +168,3 @@ export default function UnlockPasswordReset({
     </section>
   );
 }
-
-

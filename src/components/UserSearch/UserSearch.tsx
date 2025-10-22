@@ -89,7 +89,9 @@ export default function UserSearch({
         className,
       )}
     >
-      <h2 className="text-3xl font-bold text-gray-800">{t('pages.userSearch')}</h2>
+      <h2 className="text-2xl font-bold text-gray-800">
+        {t('pages.userSearch')}
+      </h2>
 
       <form onSubmit={handleSubmit} className="mt-6 flex items-center gap-4">
         <input
@@ -185,7 +187,13 @@ export default function UserSearch({
           <table className="w-full border-collapse">
             <thead className="bg-gray-100">
               <tr className="text-left text-gray-700">
-                {[t('fields.name'), t('fields.company'), t('fields.location'), t('fields.section'), t('fields.group')].map((h) => {
+                {[
+                  t('fields.name'),
+                  t('fields.company'),
+                  t('fields.location'),
+                  t('fields.section'),
+                  t('fields.group'),
+                ].map((h) => {
                   return (
                     <th key={h} className="px-6 py-3 font-semibold">
                       <div className="flex items-center gap-2">
@@ -245,5 +253,3 @@ export default function UserSearch({
     </section>
   );
 }
-
-

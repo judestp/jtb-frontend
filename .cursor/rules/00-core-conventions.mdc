@@ -4,6 +4,7 @@ globs: ["**/*"]
 alwaysApply: true
 ---
 ## General conventions
+- Always use context7 to retrieve the latest documentations
 - File paths: Prefer absolute imports using alias `@/*` (maps to `./src/*`).
 - Import extensions: Always include `.ts`/`.tsx` in imports.
 - No enums; use object literals instead.
