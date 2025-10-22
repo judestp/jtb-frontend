@@ -1,0 +1,70 @@
+---
+description: Component structure and conventions (folder, locales, props, imports)
+globs: ["src/components/**"]
+alwaysApply: true
+---
+
+## Component structure
+- Place each component in its own folder: `src/components/<Name>/`.
+- The main file is `src/components/<Name>/<Name>.tsx`.
+- Locales live alongside the component in `src/components/<Name>/locales/` with `en.json` and `ja.json` at minimum.
+
+## Props & typing
+- Define props as an interface named `I<Name>Props`.
+- Include `className?: string` in props for style extension.
+- Avoid `any`; keep strict null checks and explicit boolean checks.
+
+## i18n
+- Import `@/i18n.ts` at the top of components using translations.
+- Use `useTranslation(["common", "<namespace>"])`.
+- Provide `defaultValue` fallbacks in `t()` where helpful.
+
+## Styling & class names
+- Use Tailwind utility classes.
+- Use `clsx` for className composition; avoid custom helpers.
+- Inputs: apply focus styles (e.g., `focus:border-blue-500 focus:ring-blue-500`).
+- Buttons: primary actions use `bg-blue-600 hover:bg-blue-700 focus:ring-blue-500`.
+
+## Imports & files
+- Use alias imports `@/*` for anything under `src`.
+- Include `.ts`/`.tsx` extensions in imports per ESLint config.
+- Client components must start with `'use client';`.
+- No prop spreading; pass explicit props.
+
+## Accessibility
+- Provide labels and/or `aria-label` for interactive elements and inputs.
+
+## Example
+```
+src/components/Example/Example.tsx
+src/components/Example/locales/en.json
+src/components/Example/locales/ja.json
+```
+
+```tsx
+'use client';
+
+import React from 'react';
+import type { JSX } from 'react';
+import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
+import '@/i18n.ts';
+
+export interface IExampleProps {
+  className?: string;
+}
+
+export default function Example({ className }: IExampleProps): JSX.Element {
+  const { t } = useTranslation(['common', 'example']);
+  return (
+    <section className={clsx('bg-white rounded-lg p-6', className)}>
+      <h2 className="text-2xl font-bold text-gray-800">{t('title')}</h2>
+    </section>
+  );
+}
+```('bg-white rounded-lg p-6', className)}>
+      <h2 className="text-2xl font-bold text-gray-800">{t('title')}</h2>
+    </section>
+  );
+}
+```

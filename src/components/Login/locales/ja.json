@@ -1,0 +1,14 @@
+{
+  "title": "ログイン",
+  "fields": {
+    "usernameOrEmail": "ID またはメール",
+    "password": "パスワード",
+    "placeholderId": "ID またはメールアドレスを入力",
+    "placeholderPassword": "パスワードを入力",
+    "rememberMe": "ログイン状態を保持"
+  },
+  "actions": {
+    "forgotPassword": "パスワードをお忘れですか？",
+    "signIn": "ログイン"
+  }
+}

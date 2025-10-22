@@ -1,0 +1,14 @@
+{
+  "title": "Sign in",
+  "fields": {
+    "usernameOrEmail": "ID or Email",
+    "password": "Password",
+    "placeholderId": "Enter your ID or email",
+    "placeholderPassword": "Enter your password",
+    "rememberMe": "Remember me"
+  },
+  "actions": {
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in"
+  }
+}

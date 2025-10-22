@@ -4,6 +4,7 @@ import { useState } from 'react';
 import '@/styles/scss/main.scss';
 import UnlockPasswordReset from '@/components/UnlockPasswordReset/UnlockPasswordReset.tsx';
 import UserSearch from '@/components/UserSearch/UserSearch.tsx';
+import Login from '@/components/Login/Login.tsx';
 import JtbHeader from '@/components/Header/Header.tsx';
 import { useTranslation } from 'react-i18next';
 import '@/i18n.ts';
@@ -11,14 +12,13 @@ import '@/i18n.ts';
 const pages = {
   UnlockPasswordReset,
   UserSearch,
+  Login,
 } as const;
 
 type PageKey = keyof typeof pages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>(
-    'UnlockPasswordReset',
-  );
+  const [currentPage, setCurrentPage] = useState<PageKey>('UnlockPasswordReset');
   const { i18n } = useTranslation();
 
   const isKeyOf = <T extends object>(
