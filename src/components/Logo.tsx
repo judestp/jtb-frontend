@@ -27,7 +27,7 @@ export default function JTBLogo({
   return (
     <Image
       className={classes}
-      src="/cbimage.png"
+      src="/jtb-logo.png"
       alt="JTB Logo"
       width={width}
       height={height}
