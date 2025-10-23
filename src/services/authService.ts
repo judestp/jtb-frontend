@@ -33,11 +33,14 @@ interface ISession {
   expiresAt: string;
 }
 
-/**
- * Creates a delay for simulating network requests
- */
-const delay = (ms: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+/* No artificial delays; functions return immediately for local mock data */
+
+const hasOtp = (value: unknown): value is { otp: unknown } => {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+  return 'otp' in value;
+};
 
 /**
  * Authenticate user with username and password
@@ -46,8 +49,6 @@ export const loginUser = async (
   usernameOrEmail: string,
   password: string,
 ): Promise<IAuthResponse> => {
-  await delay(800);
-
   try {
     const user = mockDb.users.find(
       (u) => u.username.toLowerCase() === usernameOrEmail.toLowerCase(),
@@ -95,8 +96,6 @@ export const loginUser = async (
 export const requestPasswordReset = async (
   usernameOrEmail: string,
 ): Promise<IPasswordResetResponse> => {
-  await delay(800);
-
   const user = mockDb.users.find(
     (u) => u.username.toLowerCase() === usernameOrEmail.toLowerCase(),
   );
@@ -139,9 +138,9 @@ export const logoutUser = (): void => {
  * Verify one-time password (mock)
  */
 export const verifyOtp = async (otp: string): Promise<IVerifyOtpResponse> => {
-  await delay(800);
-
-  const expectedOtp = '123456';
+  const expectedOtp = hasOtp(mockDb) && typeof mockDb.otp === 'string'
+    ? mockDb.otp
+    : '123456';
   if (otp === expectedOtp) {
     return { success: true };
   }

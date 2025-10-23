@@ -11,7 +11,7 @@ import JTBLogo from '@/components/Logo.tsx';
 import { verifyOtp } from '@/services/authService.ts';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
-import { useAuthUiStore } from '@/stores/authUiStore.ts';
+import { LOGIN_STAGES, useAuthUiStore } from '@/stores/authUiStore.ts';
 
 interface IOtpFormData {
   otp: string;
@@ -26,6 +26,7 @@ export default function OtpVerification({
   className,
   onVerified,
 }: IOtpVerificationProps): JSX.Element {
+  const { setLoginStage } = useAuthUiStore();
   if (!i18n.hasResourceBundle('en', 'otp')) {
     i18n.addResourceBundle('en', 'otp', en, true, true);
   }
@@ -41,7 +42,7 @@ export default function OtpVerification({
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm<IOtpFormData>({
-    defaultValues: { otp: '' },
+    defaultValues: { otp: '123456' },
     mode: 'onSubmit',
   });
 
@@ -53,7 +54,7 @@ export default function OtpVerification({
         return;
       }
       setErrorKey(null);
-      useAuthUiStore.getState().setLoginStage('login');
+      setLoginStage(LOGIN_STAGES.AUTHENTICATED);
       if (typeof onVerified === 'function') {
         onVerified();
       }
