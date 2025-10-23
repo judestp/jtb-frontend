@@ -47,19 +47,13 @@ export default function Login({
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   /**
-   * Translates error keys to localized messages
+   * Translates error keys using locales with a safe fallback
    */
   const getErrorTranslation = (errorKey: string): string => {
-    return t(`login:errors.${errorKey}`, {
-      defaultValue:
-        errorKey === 'requiredUserId'
-          ? 'Enter your user ID.'
-          : errorKey === 'requiredPassword'
-            ? 'Enter your password.'
-            : errorKey === 'invalidCredentials'
-              ? 'Your user ID or password is incorrect.'
-              : 'An error occurred.',
+    const fallback = t('common:errors.unexpected', {
+      defaultValue: 'An unexpected error occurred. Please try again.',
     });
+    return t(`login:errors.${errorKey}`, { defaultValue: fallback });
   };
 
   const {
@@ -91,7 +85,7 @@ export default function Login({
       }
 
       /* Handle potentially undefined token */
-      const token = response.token !== undefined ? response.token : '';
+      const token = response.token ?? '';
       localStorage.setItem('auth_token', token);
 
       /* Handle potentially undefined user */
@@ -101,8 +95,7 @@ export default function Login({
 
       if (typeof onLogin === 'function') {
         /* Ensure username is properly handled */
-        const username =
-          response.user?.username !== undefined ? response.user.username : '';
+        const username = response.user?.username ?? '';
         onLogin({
           usernameOrEmail: username,
           password: '',

@@ -27,5 +27,8 @@
   "pages": {
     "unlockPasswordReset": "ロック解除/パスワードリセット",
     "userSearch": "ユーザー検索"
+  },
+  "errors": {
+    "unexpected": "予期せぬエラーが発生しました。もう一度お試しください。"
   }
 }

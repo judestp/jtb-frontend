@@ -27,5 +27,8 @@
   "pages": {
     "unlockPasswordReset": "Unlock/Password Reset",
     "userSearch": "User Search"
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred. Please try again."
   }
 }
