@@ -1,13 +1,22 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { JSX } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n.ts';
 import JTBLogo from '@/components/Logo.tsx';
+import { loginUser } from '@/services/authService.ts';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
+
+interface ILoginFormData {
+  usernameOrEmail: string;
+  password: string;
+  rememberMe: boolean;
+}
 
 export interface ILoginProps {
   className?: string;
@@ -35,20 +44,68 @@ export default function Login({
 
   const { t } = useTranslation(['common', 'login']);
 
-  const [usernameOrEmail, setUsernameOrEmail] =
-    useState<string>(defaultUsername);
-  const [password, setPassword] = useState<string>('123');
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (typeof onLogin === 'function') {
-        onLogin({ usernameOrEmail, password, rememberMe });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+  } = useForm<ILoginFormData>({
+    defaultValues: {
+      usernameOrEmail: defaultUsername,
+      password: '123',
+      rememberMe: false,
+    },
+    mode: 'onSubmit',
+  });
+
+  const loginMutation = useMutation({
+    mutationFn: (data: ILoginFormData) => {
+      return loginUser(data.usernameOrEmail, data.password);
+    },
+    onSuccess: (response) => {
+      if (response.success) {
+        /* Handle potentially undefined token */
+        const token = response.token !== undefined ? response.token : '';
+        localStorage.setItem('auth_token', token);
+
+        /* Handle potentially undefined user */
+        if (response.user !== undefined) {
+          localStorage.setItem('user', JSON.stringify(response.user));
+        }
+
+        if (typeof onLogin === 'function') {
+          /* Ensure username is properly handled */
+          const username =
+            response.user?.username !== undefined ? response.user.username : '';
+          onLogin({
+            usernameOrEmail: username,
+            password: '',
+            rememberMe: false,
+          });
+        }
+        setLoginError(null);
+      } else {
+        /* Handle potentially undefined error message */
+        const errorMessage =
+          response.error !== undefined ? response.error : 'Login failed';
+        setLoginError(errorMessage);
       }
     },
-    [onLogin, password, rememberMe, usernameOrEmail],
+    onError: (error) => {
+      setLoginError('An unexpected error occurred. Please try again.');
+      console.error('Login error:', error);
+    },
+  });
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const onSubmitForm = useCallback(
+    (data: ILoginFormData) => {
+      setLoginError(null);
+      loginMutation.mutate(data);
+    },
+    [loginMutation],
   );
 
   return (
@@ -74,7 +131,6 @@ export default function Login({
               'bg-white',
               'border',
               'border-gray-200',
-              // 'rounded-lg',
               'shadow-sm',
               'h-full',
               'flex',
@@ -87,7 +143,16 @@ export default function Login({
               {t('login:title', { defaultValue: 'Sign in' })}
             </h2>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+            {loginError !== null && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600 text-center">
+                {loginError}
+              </div>
+            )}
+
+            <form
+              onSubmit={handleSubmit(onSubmitForm)}
+              className="mt-6 space-y-5"
+            >
               <div>
                 <label
                   htmlFor="login-username"
@@ -100,10 +165,13 @@ export default function Login({
                 <input
                   id="login-username"
                   type="text"
-                  value={usernameOrEmail}
-                  onChange={(e) => {
-                    setUsernameOrEmail(e.target.value ?? '');
-                  }}
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  {...register('usernameOrEmail', {
+                    required: t(
+                      'login:errors.requiredUserId',
+                      'Enter your user ID.',
+                    ),
+                  })}
                   placeholder={t('login:fields.placeholderId', {
                     defaultValue: 'ID',
                   })}
@@ -112,23 +180,34 @@ export default function Login({
                     'w-full',
                     'rounded-md',
                     'border',
-                    'border-gray-300',
+                    isSubmitted && errors.usernameOrEmail
+                      ? 'border-red-500'
+                      : 'border-gray-300',
                     'bg-white',
                     'px-4',
                     'py-3',
                     'text-gray-900',
                     'placeholder-gray-400',
                     'shadow-sm',
-                    'focus:border-blue-500',
+                    isSubmitted && errors.usernameOrEmail
+                      ? 'focus:border-red-500'
+                      : 'focus:border-blue-500',
                     'focus:outline-none',
                     'focus:ring-2',
-                    'focus:ring-blue-500',
+                    isSubmitted && errors.usernameOrEmail
+                      ? 'focus:ring-red-500'
+                      : 'focus:ring-blue-500',
                   )}
                   aria-label={t('login:fields.usernameOrEmail', {
                     defaultValue: 'User ID',
                   })}
                   autoComplete="username"
                 />
+                {isSubmitted && errors.usernameOrEmail && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.usernameOrEmail.message}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -142,10 +221,13 @@ export default function Login({
                   <input
                     id="login-password"
                     type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value ?? '');
-                    }}
+                    /* eslint-disable-next-line react/jsx-props-no-spreading */
+                    {...register('password', {
+                      required: t(
+                        'login:errors.requiredPassword',
+                        'Enter your password.',
+                      ),
+                    })}
                     placeholder={t('login:fields.placeholderPassword', {
                       defaultValue: 'password',
                     })}
@@ -153,7 +235,9 @@ export default function Login({
                       'w-full',
                       'rounded-md',
                       'border',
-                      'border-gray-300',
+                      isSubmitted && errors.password
+                        ? 'border-red-500'
+                        : 'border-gray-300',
                       'bg-white',
                       'px-4',
                       'py-3',
@@ -161,10 +245,14 @@ export default function Login({
                       'text-gray-900',
                       'placeholder-gray-400',
                       'shadow-sm',
-                      'focus:border-blue-500',
+                      isSubmitted && errors.password
+                        ? 'focus:border-red-500'
+                        : 'focus:border-blue-500',
                       'focus:outline-none',
                       'focus:ring-2',
-                      'focus:ring-blue-500',
+                      isSubmitted && errors.password
+                        ? 'focus:ring-red-500'
+                        : 'focus:ring-blue-500',
                     )}
                     aria-label={t('login:fields.password', {
                       defaultValue: 'Password',
@@ -197,16 +285,19 @@ export default function Login({
                     </svg>
                   </button>
                 </div>
+                {isSubmitted && errors.password && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center justify-between">
                 <label className="inline-flex items-center gap-2 text-gray-700">
                   <input
                     type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => {
-                      setRememberMe(Boolean(e.target.checked));
-                    }}
+                    /* eslint-disable-next-line react/jsx-props-no-spreading */
+                    {...register('rememberMe')}
                     className="h-4 w-4"
                   />
                   <span className="text-sm">
@@ -219,6 +310,7 @@ export default function Login({
 
               <button
                 type="submit"
+                disabled={loginMutation.isPending}
                 className={clsx(
                   'w-full',
                   'rounded-md',
@@ -232,12 +324,41 @@ export default function Login({
                   'focus:outline-none',
                   'focus:ring-2',
                   'focus:ring-blue-500',
+                  loginMutation.isPending && 'opacity-70 cursor-not-allowed',
                 )}
                 aria-label={t('login:actions.signIn', {
                   defaultValue: 'Sign in',
                 })}
               >
-                {t('login:actions.signIn', { defaultValue: 'Sign in' })}
+                {loginMutation.isPending ? (
+                  <div className="flex items-center justify-center">
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    {t('login:actions.signingIn', {
+                      defaultValue: 'Signing in...',
+                    })}
+                  </div>
+                ) : (
+                  t('login:actions.signIn', { defaultValue: 'Sign in' })
+                )}
               </button>
 
               <div className="mt-4 text-center">

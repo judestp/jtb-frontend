@@ -9,6 +9,13 @@
   },
   "actions": {
     "forgotPassword": "パスワードをお忘れですか？",
-    "signIn": "ログイン"
+    "signIn": "ログイン",
+    "signingIn": "ログイン中..."
+  },
+  "errors": {
+    "requiredUserId": "IDを入力してください。",
+    "requiredPassword": "パスワードを入力してください。",
+    "invalidCredentials": "IDまたはパスワードが正しくありません。",
+    "serverError": "予期せぬエラーが発生しました。もう一度お試しください。"
   }
 }

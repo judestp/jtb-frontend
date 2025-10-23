@@ -1,0 +1,47 @@
+---
+description: Internationalization (i18n) Requirements for Components
+globs: ["src/components/**/*.tsx", "src/app/**/*.tsx"]
+alwaysApply: true
+---
+
+# Internationalization (i18n) Requirements
+
+## Component Locale Structure
+- Each component must have its own locale files in a `locales` subdirectory
+- Required locale files:
+  - `locales/en.json` (English - default)
+  - `locales/ja.json` (Japanese)
+
+## Locale File Format
+- Use nested JSON structure with logical grouping
+- Common categories:
+  - `title`: Component title/header text
+  - `fields`: Form field labels, placeholders
+  - `actions`: Button/link text
+  - `errors`: Validation and error messages
+  - `descriptions`: Help text and descriptions
+
+## i18n Integration
+- Import locale files directly in component:
+  ```tsx
+  import en from './locales/en.json';
+  import ja from './locales/ja.json';
+  ```
+- Register bundles if not already registered:
+  ```tsx
+  if (!i18n.hasResourceBundle('en', 'namespace')) {
+    i18n.addResourceBundle('en', 'namespace', en, true, true);
+  }
+  ```
+- Use namespaced keys with fallbacks:
+  ```tsx
+  t('namespace:key', { defaultValue: 'Fallback text' })
+  ```
+
+## Best Practices
+- Never hardcode user-facing strings
+- Use descriptive translation keys
+- Provide default values for all translations
+- Include error messages in locale files
+- Use variables for dynamic content: `t('greeting', { name })`
+- Keep locale files organized and synchronized across languages

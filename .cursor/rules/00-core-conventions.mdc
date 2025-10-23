@@ -16,8 +16,18 @@ alwaysApply: true
 - TypeScript strict mode and `strictNullChecks` are required.
 - Use explicit boolean checks.
 
+## Readability
+- As much as possible, code should read like plain English
+- Never use magic numbers
+
 ## Naming conventions
 - Functions: `camelCase` or `PascalCase` (same for exported).
 - Classes: `PascalCase`.
 - Type-like (types, interfaces, generics): `PascalCase`.
 - Interfaces: `PascalCase` with `I` prefix (e.g., `IUser`).
+
+## Comment Rules
+
+- Only add useful comments.
+- Don't add obvious comments.
+- Comment like how a senior-level engineer would

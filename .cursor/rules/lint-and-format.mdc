@@ -1,0 +1,10 @@
+---
+description: Lint and Format
+globs: ["src/components/**/*.tsx", "src/app/**/*.tsx"]
+alwaysApply: true
+---
+
+# Lint and Format Before Finalizing Changes
+
+- Run `bun lint` to check for lint errors
+- Run prettier to format code

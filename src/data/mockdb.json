@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin@gmail.com",
+      "password": "123",
+      "firstName": "Admin",
+      "lastName": "User",
+      "role": "admin",
+      "lastLogin": "2023-10-15T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "username": "user@example.com",
+      "password": "password123",
+      "firstName": "Test",
+      "lastName": "User",
+      "role": "user",
+      "lastLogin": "2023-10-10T08:15:00Z"
+    },
+    {
+      "id": "3",
+      "username": "manager@jtb.com",
+      "password": "manager456",
+      "firstName": "Team",
+      "lastName": "Manager",
+      "role": "manager",
+      "lastLogin": "2023-10-12T14:45:00Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess_123456",
+      "userId": "1",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6IkFkbWluIFVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9",
+      "expiresAt": "2023-11-15T10:30:00Z"
+    }
+  ],
+  "passwordResetRequests": [
+    {
+      "id": "reset_123",
+      "userId": "2",
+      "token": "abc123def456",
+      "expiresAt": "2023-10-16T08:15:00Z",
+      "used": false
+    }
+  ]
+}

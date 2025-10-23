@@ -9,6 +9,13 @@
   },
   "actions": {
     "forgotPassword": "Forgot password?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "signingIn": "Signing in..."
+  },
+  "errors": {
+    "requiredUserId": "Enter your user ID.",
+    "requiredPassword": "Enter your password.",
+    "invalidCredentials": "Your user ID or password is incorrect.",
+    "serverError": "An unexpected error occurred. Please try again."
   }
 }
