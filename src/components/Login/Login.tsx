@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import type { JSX } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
@@ -43,11 +43,27 @@ export default function Login({
   }
 
   const { t } = useTranslation(['common', 'login']);
+  const [loginErrorKey, setLoginErrorKey] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const [loginError, setLoginError] = useState<string | null>(null);
+  /**
+   * Translates error keys to localized messages
+   */
+  const getErrorTranslation = (errorKey: string): string => {
+    return t(`login:errors.${errorKey}`, {
+      defaultValue:
+        errorKey === 'requiredUserId'
+          ? 'Enter your user ID.'
+          : errorKey === 'requiredPassword'
+            ? 'Enter your password.'
+            : errorKey === 'invalidCredentials'
+              ? 'Your user ID or password is incorrect.'
+              : 'An error occurred.',
+    });
+  };
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitted },
   } = useForm<ILoginFormData>({
@@ -64,49 +80,61 @@ export default function Login({
       return loginUser(data.usernameOrEmail, data.password);
     },
     onSuccess: (response) => {
-      if (response.success) {
-        /* Handle potentially undefined token */
-        const token = response.token !== undefined ? response.token : '';
-        localStorage.setItem('auth_token', token);
-
-        /* Handle potentially undefined user */
-        if (response.user !== undefined) {
-          localStorage.setItem('user', JSON.stringify(response.user));
+      if (!response.success) {
+        // Store just the error key, not the translated text
+        if (response.error === 'invalidCredentials') {
+          setLoginErrorKey('invalidCredentials');
+        } else {
+          setLoginErrorKey('serverError');
         }
-
-        if (typeof onLogin === 'function') {
-          /* Ensure username is properly handled */
-          const username =
-            response.user?.username !== undefined ? response.user.username : '';
-          onLogin({
-            usernameOrEmail: username,
-            password: '',
-            rememberMe: false,
-          });
-        }
-        setLoginError(null);
-      } else {
-        /* Handle potentially undefined error message */
-        const errorMessage =
-          response.error !== undefined ? response.error : 'Login failed';
-        setLoginError(errorMessage);
+        return;
       }
+
+      /* Handle potentially undefined token */
+      const token = response.token !== undefined ? response.token : '';
+      localStorage.setItem('auth_token', token);
+
+      /* Handle potentially undefined user */
+      if (response.user !== undefined) {
+        localStorage.setItem('user', JSON.stringify(response.user));
+      }
+
+      if (typeof onLogin === 'function') {
+        /* Ensure username is properly handled */
+        const username =
+          response.user?.username !== undefined ? response.user.username : '';
+        onLogin({
+          usernameOrEmail: username,
+          password: '',
+          rememberMe: false,
+        });
+      }
+
+      setLoginErrorKey(null);
     },
     onError: (error) => {
-      setLoginError('An unexpected error occurred. Please try again.');
+      setLoginErrorKey('serverError');
       console.error('Login error:', error);
     },
   });
 
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleTogglePassword = (): void => {
+    setShowPassword((prev) => !prev);
+  };
 
-  const onSubmitForm = useCallback(
-    (data: ILoginFormData) => {
-      setLoginError(null);
+  const handleFormSubmit = useCallback(
+    (data: ILoginFormData): void => {
+      setLoginErrorKey(null);
       loginMutation.mutate(data);
     },
     [loginMutation],
   );
+
+  const handleForgotPassword = (): void => {
+    if (typeof onForgotPassword === 'function') {
+      onForgotPassword();
+    }
+  };
 
   return (
     <section
@@ -143,14 +171,14 @@ export default function Login({
               {t('login:title', { defaultValue: 'Sign in' })}
             </h2>
 
-            {loginError !== null && (
+            {loginErrorKey !== null && (
               <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600 text-center">
-                {loginError}
+                {getErrorTranslation(loginErrorKey)}
               </div>
             )}
 
             <form
-              onSubmit={handleSubmit(onSubmitForm)}
+              onSubmit={handleSubmit(handleFormSubmit)}
               className="mt-6 space-y-5"
             >
               <div>
@@ -162,50 +190,58 @@ export default function Login({
                     defaultValue: 'User ID',
                   })}
                 </label>
-                <input
-                  id="login-username"
-                  type="text"
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  {...register('usernameOrEmail', {
-                    required: t(
-                      'login:errors.requiredUserId',
-                      'Enter your user ID.',
-                    ),
-                  })}
-                  placeholder={t('login:fields.placeholderId', {
-                    defaultValue: 'ID',
-                  })}
-                  className={clsx(
-                    'mt-2',
-                    'w-full',
-                    'rounded-md',
-                    'border',
-                    isSubmitted && errors.usernameOrEmail
-                      ? 'border-red-500'
-                      : 'border-gray-300',
-                    'bg-white',
-                    'px-4',
-                    'py-3',
-                    'text-gray-900',
-                    'placeholder-gray-400',
-                    'shadow-sm',
-                    isSubmitted && errors.usernameOrEmail
-                      ? 'focus:border-red-500'
-                      : 'focus:border-blue-500',
-                    'focus:outline-none',
-                    'focus:ring-2',
-                    isSubmitted && errors.usernameOrEmail
-                      ? 'focus:ring-red-500'
-                      : 'focus:ring-blue-500',
+                <Controller
+                  name="usernameOrEmail"
+                  control={control}
+                  rules={{ required: 'requiredUserId' }}
+                  render={({
+                    field: { name, onChange, onBlur, value, ref },
+                  }) => (
+                    <input
+                      id="login-username"
+                      type="text"
+                      name={name}
+                      ref={ref}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={typeof value === 'string' ? value : ''}
+                      placeholder={t('login:fields.placeholderId', {
+                        defaultValue: 'ID',
+                      })}
+                      className={clsx(
+                        'mt-2',
+                        'w-full',
+                        'rounded-md',
+                        'border',
+                        isSubmitted && errors.usernameOrEmail
+                          ? 'border-red-500'
+                          : 'border-gray-300',
+                        'bg-white',
+                        'px-4',
+                        'py-3',
+                        'text-gray-900',
+                        'placeholder-gray-400',
+                        'shadow-sm',
+                        isSubmitted && errors.usernameOrEmail
+                          ? 'focus:border-red-500'
+                          : 'focus:border-blue-500',
+                        'focus:outline-none',
+                        'focus:ring-2',
+                        isSubmitted && errors.usernameOrEmail
+                          ? 'focus:ring-red-500'
+                          : 'focus:ring-blue-500',
+                      )}
+                      aria-label={t('login:fields.usernameOrEmail', {
+                        defaultValue: 'User ID',
+                      })}
+                      autoComplete="username"
+                    />
                   )}
-                  aria-label={t('login:fields.usernameOrEmail', {
-                    defaultValue: 'User ID',
-                  })}
-                  autoComplete="username"
                 />
                 {isSubmitted && errors.usernameOrEmail && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.usernameOrEmail.message}
+                    {typeof errors.usernameOrEmail.message === 'string' &&
+                      getErrorTranslation(errors.usernameOrEmail.message)}
                   </p>
                 )}
               </div>
@@ -218,54 +254,57 @@ export default function Login({
                   {t('login:fields.password', { defaultValue: 'Password' })}
                 </label>
                 <div className="relative mt-2">
-                  <input
-                    id="login-password"
-                    type={showPassword ? 'text' : 'password'}
-                    /* eslint-disable-next-line react/jsx-props-no-spreading */
-                    {...register('password', {
-                      required: t(
-                        'login:errors.requiredPassword',
-                        'Enter your password.',
-                      ),
-                    })}
-                    placeholder={t('login:fields.placeholderPassword', {
-                      defaultValue: 'password',
-                    })}
-                    className={clsx(
-                      'w-full',
-                      'rounded-md',
-                      'border',
-                      isSubmitted && errors.password
-                        ? 'border-red-500'
-                        : 'border-gray-300',
-                      'bg-white',
-                      'px-4',
-                      'py-3',
-                      'pr-10',
-                      'text-gray-900',
-                      'placeholder-gray-400',
-                      'shadow-sm',
-                      isSubmitted && errors.password
-                        ? 'focus:border-red-500'
-                        : 'focus:border-blue-500',
-                      'focus:outline-none',
-                      'focus:ring-2',
-                      isSubmitted && errors.password
-                        ? 'focus:ring-red-500'
-                        : 'focus:ring-blue-500',
+                  <Controller
+                    name="password"
+                    control={control}
+                    rules={{ required: 'requiredPassword' }}
+                    render={({
+                      field: { name, onChange, onBlur, value, ref },
+                    }) => (
+                      <input
+                        id="login-password"
+                        type={showPassword ? 'text' : 'password'}
+                        name={name}
+                        ref={ref}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={typeof value === 'string' ? value : ''}
+                        placeholder={t('login:fields.placeholderPassword', {
+                          defaultValue: 'password',
+                        })}
+                        className={clsx(
+                          'w-full',
+                          'rounded-md',
+                          'border',
+                          isSubmitted && errors.password
+                            ? 'border-red-500'
+                            : 'border-gray-300',
+                          'bg-white',
+                          'px-4',
+                          'py-3',
+                          'pr-10',
+                          'text-gray-900',
+                          'placeholder-gray-400',
+                          'shadow-sm',
+                          isSubmitted && errors.password
+                            ? 'focus:border-red-500'
+                            : 'focus:border-blue-500',
+                          'focus:outline-none',
+                          'focus:ring-2',
+                          isSubmitted && errors.password
+                            ? 'focus:ring-red-500'
+                            : 'focus:ring-blue-500',
+                        )}
+                        aria-label={t('login:fields.password', {
+                          defaultValue: 'Password',
+                        })}
+                        autoComplete="current-password"
+                      />
                     )}
-                    aria-label={t('login:fields.password', {
-                      defaultValue: 'Password',
-                    })}
-                    autoComplete="current-password"
                   />
                   <button
                     type="button"
-                    onClick={() => {
-                      setShowPassword((prev) => {
-                        return !prev;
-                      });
-                    }}
+                    onClick={handleTogglePassword}
                     aria-label={
                       showPassword ? 'Hide password' : 'Show password'
                     }
@@ -287,18 +326,32 @@ export default function Login({
                 </div>
                 {isSubmitted && errors.password && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.password.message}
+                    {typeof errors.password.message === 'string' &&
+                      getErrorTranslation(errors.password.message)}
                   </p>
                 )}
               </div>
 
               <div className="flex items-center justify-between">
                 <label className="inline-flex items-center gap-2 text-gray-700">
-                  <input
-                    type="checkbox"
-                    /* eslint-disable-next-line react/jsx-props-no-spreading */
-                    {...register('rememberMe')}
-                    className="h-4 w-4"
+                  <Controller
+                    name="rememberMe"
+                    control={control}
+                    render={({
+                      field: { name, value, onChange, onBlur, ref },
+                    }) => (
+                      <input
+                        type="checkbox"
+                        name={name}
+                        ref={ref}
+                        checked={Boolean(value)}
+                        onChange={(e) => {
+                          onChange(e.target.checked);
+                        }}
+                        onBlur={onBlur}
+                        className="h-4 w-4"
+                      />
+                    )}
                   />
                   <span className="text-sm">
                     {t('login:fields.rememberMe', {
@@ -364,12 +417,17 @@ export default function Login({
               <div className="mt-4 text-center">
                 <button
                   type="button"
-                  onClick={() => {
-                    if (typeof onForgotPassword === 'function') {
-                      onForgotPassword();
+                  onClick={handleForgotPassword}
+                  className="text-sm font-semibold text-blue-700 hover:underline"
+                  aria-label={t('login:actions.forgotPassword', {
+                    defaultValue: 'Forgot password?',
+                  })}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleForgotPassword();
                     }
                   }}
-                  className="text-sm font-semibold text-blue-700 hover:underline"
                 >
                   {t('login:actions.forgotPassword', {
                     defaultValue: 'Forgot password?',

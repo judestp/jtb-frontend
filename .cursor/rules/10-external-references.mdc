@@ -1,0 +1,17 @@
+---
+description: External reference links for development guidelines
+globs: ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx", "src/**/*.js"]
+alwaysApply: true
+---
+
+# External Reference Links
+
+This file contains links to external resources that should be referenced when developing code for this project.
+
+## Front-End Development
+
+- [Front-End Cursor Rules](https://cursor.directory/front-end-cursor-rules) - Guidelines for React, Next.js, TypeScript, and modern UI frameworks
+
+## Additional Resources
+
+Add more external reference links here as needed.

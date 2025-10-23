@@ -1,0 +1,67 @@
+---
+description: Front-End Development Best Practices
+globs: ["src/**/*.tsx", "src/**/*.ts", "src/**/*.jsx", "src/**/*.js"]
+alwaysApply: true
+---
+
+# Front-End Development Best Practices
+
+Source: [cursor.directory/front-end-cursor-rules](https://cursor.directory/front-end-cursor-rules)
+
+## Code Structure
+
+- Use early returns whenever possible to make the code more readable.
+- Follow DRY principle (Don't Repeat Yourself).
+- Focus on readability over performance optimization.
+- Leave no TODOs, placeholders, or missing pieces in production code.
+
+## Styling
+
+- Always use Tailwind classes for styling HTML elements.
+- Avoid using raw CSS or style tags when possible.
+- Use `clsx` for conditional class application.
+
+## Naming Conventions
+
+- Use descriptive variable and function/const names.
+- Prefix event handler functions with "handle", e.g., `handleClick` for onClick and `handleKeyDown` for onKeyDown.
+- Use PascalCase for components and camelCase for functions/variables.
+
+## Function Declarations
+
+- Use const arrow functions instead of traditional function declarations:
+  ```typescript
+  // Preferred
+  const handleClick = (): void => {
+    // implementation
+  };
+  
+  // Avoid
+  function handleClick() {
+    // implementation
+  }
+  ```
+
+## Accessibility
+
+- Implement proper accessibility features on all interactive elements.
+- Interactive elements should include appropriate ARIA attributes.
+- Ensure keyboard navigation works for all interactive elements.
+- For links and buttons:
+  - Add `tabIndex="0"` when needed
+  - Include `aria-label` for non-text elements
+  - Handle both click and keyboard events
+
+## TypeScript Best Practices
+
+- Define types for all variables, parameters, and return values.
+- Use interfaces for object shapes (prefixed with "I").
+- Avoid using `any` type; prefer `unknown` when type is uncertain.
+- Use type guards to narrow types safely.
+
+## React Component Structure
+
+- Use functional components with hooks.
+- Keep components focused on a single responsibility.
+- Extract reusable logic into custom hooks.
+- Use proper dependency arrays in useEffect, useMemo, and useCallback.

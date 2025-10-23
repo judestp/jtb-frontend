@@ -24,7 +24,14 @@ if (!i18n.isInitialized) {
         escapeValue: false,
       },
       detection: {
-        order: ['htmlTag', 'navigator', 'cookie', 'localStorage'],
+        order: [
+          'querystring',
+          'navigator',
+          'htmlTag',
+          'cookie',
+          'localStorage',
+        ],
+        lookupQuerystring: 'lng',
         caches: ['localStorage'],
       },
       returnEmptyString: false,
@@ -32,5 +39,3 @@ if (!i18n.isInitialized) {
 }
 
 export default i18n;
-
-

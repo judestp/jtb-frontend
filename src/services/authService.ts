@@ -1,4 +1,4 @@
-import mockDb from '../data/mockdb.json';
+import mockDb from '@/data/mockdb.json';
 
 export interface IUser {
   id: string;
@@ -16,7 +16,27 @@ export interface IAuthResponse {
   error?: string;
 }
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+interface IPasswordResetResponse {
+  success: boolean;
+  message: string;
+}
+
+interface ISession {
+  id: string;
+  userId: string;
+  token: string;
+  expiresAt: string;
+}
+
+/**
+ * Creates a delay for simulating network requests
+ */
+const delay = (ms: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Authenticate user with username and password
+ */
 export const loginUser = async (
   usernameOrEmail: string,
   password: string,
@@ -31,18 +51,18 @@ export const loginUser = async (
     if (!user) {
       return {
         success: false,
-        error: 'Your user ID or password is incorrect.',
+        error: 'invalidCredentials',
       };
     }
 
     if (user.password !== password) {
       return {
         success: false,
-        error: 'Your user ID or password is incorrect.',
+        error: 'invalidCredentials',
       };
     }
 
-    const session = {
+    const session: ISession = {
       id: `sess_${String(Date.now())}`,
       userId: user.id,
       token: `mock_token_${String(user.id)}_${String(Date.now())}`,
@@ -59,14 +79,17 @@ export const loginUser = async (
   } catch {
     return {
       success: false,
-      error: 'An unexpected error occurred. Please try again.',
+      error: 'serverError',
     };
   }
 };
 
+/**
+ * Request password reset for a user
+ */
 export const requestPasswordReset = async (
   usernameOrEmail: string,
-): Promise<{ success: boolean; message: string }> => {
+): Promise<IPasswordResetResponse> => {
   await delay(800);
 
   const user = mockDb.users.find(
@@ -86,15 +109,22 @@ export const requestPasswordReset = async (
   };
 };
 
+/**
+ * Check if user is authenticated based on token presence
+ */
 export const checkAuthStatus = (): boolean => {
   const token = localStorage.getItem('auth_token');
-  /* Explicitly handle null case */
+
   if (token === null) {
     return false;
   }
+
   return true;
 };
 
+/**
+ * Remove user authentication data
+ */
 export const logoutUser = (): void => {
   localStorage.removeItem('auth_token');
   localStorage.removeItem('user');
