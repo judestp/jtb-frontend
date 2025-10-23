@@ -1,0 +1,16 @@
+{
+  "title": "OTP認証",
+  "fields": {
+    "otp": "ワンタイムパスワード",
+    "placeholderOtp": "6桁のOTPを入力してください"
+  },
+  "actions": {
+    "verify": "認証",
+    "verifying": "認証中..."
+  },
+  "errors": {
+    "requiredOtp": "ワンタイムパスワードを入力してください。",
+    "invalidFormat": "OTPの形式が正しくありません。6桁を入力してください。",
+    "invalidOrExpiredOtp": "ワンタイムパスワードが無効、または有効期限切れです。"
+  }
+}

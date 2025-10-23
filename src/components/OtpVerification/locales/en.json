@@ -1,0 +1,17 @@
+{
+  "title": "OTP Verification",
+  "fields": {
+    "otp": "One-Time Password",
+    "placeholderOtp": "Enter your 6-digit OTP"
+  },
+  "actions": {
+    "verify": "Verify",
+    "verifying": "Verifying..."
+  },
+  "errors": {
+    "requiredOtp": "Enter your One Time Password (OTP).",
+    "invalidFormat": "Invalid OTP format, enter 6 digits.",
+    "invalidOrExpiredOtp": "Invalid or expired one-time password."
+  }
+}
+

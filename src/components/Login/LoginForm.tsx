@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n.ts';
 import JTBLogo from '@/components/Logo.tsx';
 import { loginUser } from '@/services/authService.ts';
+import { useAuthUiStore } from '@/stores/authUiStore.ts';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
 
@@ -45,6 +46,7 @@ export default function Login({
   const { t } = useTranslation(['common', 'login']);
   const [loginErrorKey, setLoginErrorKey] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const setLoginStage = useAuthUiStore((s) => s.setLoginStage);
 
   /**
    * Translates error keys using locales with a safe fallback
@@ -102,6 +104,8 @@ export default function Login({
           rememberMe: false,
         });
       }
+
+      setLoginStage('otp');
 
       setLoginErrorKey(null);
     },

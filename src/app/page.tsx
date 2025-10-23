@@ -4,15 +4,15 @@ import { useState } from 'react';
 import '@/styles/scss/main.scss';
 import UnlockPasswordReset from '@/components/UnlockPasswordReset/UnlockPasswordReset.tsx';
 import UserSearch from '@/components/UserSearch/UserSearch.tsx';
-import Login from '@/components/Login/Login.tsx';
 import JtbHeader from '@/components/Header/Header.tsx';
 import LanguageSelector from '@/components/LanguageSelector/LanguageSelector.tsx';
 import QueryProvider from '@/providers/QueryProvider.tsx';
 import '@/i18n.ts';
+import LoginOrchestrator from '@/components/LoginOrchestrator/LoginOrchestrator.tsx';
 
 const pages = {
   public: {
-    Login,
+    'Login & OTP': LoginOrchestrator,
   },
   private: {
     UserSearch,
@@ -28,7 +28,7 @@ const allPages = {
 type PageKey = keyof typeof allPages;
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<PageKey>('Login');
+  const [currentPage, setCurrentPage] = useState<PageKey>('Login & OTP');
 
   const isKeyOf = <T extends object>(
     obj: T,

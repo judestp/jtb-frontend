@@ -16,6 +16,11 @@ export interface IAuthResponse {
   error?: string;
 }
 
+interface IVerifyOtpResponse {
+  success: boolean;
+  error?: string;
+}
+
 interface IPasswordResetResponse {
   success: boolean;
   message: string;
@@ -128,4 +133,18 @@ export const checkAuthStatus = (): boolean => {
 export const logoutUser = (): void => {
   localStorage.removeItem('auth_token');
   localStorage.removeItem('user');
+};
+
+/**
+ * Verify one-time password (mock)
+ */
+export const verifyOtp = async (otp: string): Promise<IVerifyOtpResponse> => {
+  await delay(800);
+
+  const expectedOtp = '123456';
+  if (otp === expectedOtp) {
+    return { success: true };
+  }
+
+  return { success: false, error: 'invalidOrExpiredOtp' };
 };
