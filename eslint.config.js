@@ -8,6 +8,10 @@ import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 
+import { globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const compat = new FlatCompat({
@@ -17,23 +21,23 @@ const compat = new FlatCompat({
 });
 
 export default [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  {
-    ignores: [
-      '**/dist',
-      '**/eslint.config.js',
-      '**/vite.config.ts',
-      '**/vitest.config.ts',
-      '**/tailwind.config.js',
-      '**/postcss.config.js',
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    '**/dist',
+    '**/eslint.config.js',
+    '**/vite.config.ts',
+    '**/vitest.config.ts',
+    '**/tailwind.config.js',
+    '**/postcss.config.js',
 
-      'node_modules/**',
-      '.next/**',
-      'out/**',
-      'build/**',
-      'next-env.d.ts',
-    ],
-  },
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+  ]),
   ...fixupConfigRules(
     compat.extends(
       'eslint:recommended',
