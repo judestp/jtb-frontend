@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n.ts';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
+import { PASSWORD_MIN_LENGTH } from '@/config/authUi.ts';
 
 export interface IPasswordSetupProps {
   className?: string;
@@ -87,7 +88,10 @@ export default function PasswordSetup({
                 control={control}
                 rules={{
                   required: 'requiredPassword',
-                  minLength: { value: 8, message: 'minLength' },
+                  minLength: {
+                    value: PASSWORD_MIN_LENGTH,
+                    message: 'minLength',
+                  },
                 }}
                 render={({ field: { name, onChange, onBlur, value, ref } }) => (
                   <input

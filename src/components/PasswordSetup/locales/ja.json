@@ -10,7 +10,7 @@
   },
   "errors": {
     "requiredPassword": "パスワードを入力してください。",
-    "minLength": "パスワードは8文字以上で入力してください。",
+    "minLength": "パスワードは10文字以上で入力してください。",
     "requiredConfirm": "確認用パスワードを入力してください。",
     "mismatch": "パスワードが一致しません。"
   }

@@ -10,7 +10,7 @@
   },
   "errors": {
     "requiredPassword": "Password is required.",
-    "minLength": "Password must be at least 8 characters.",
+    "minLength": "Password must be at least 10 characters.",
     "requiredConfirm": "Confirm your password.",
     "mismatch": "Passwords do not match."
   }

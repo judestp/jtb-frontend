@@ -1,0 +1,25 @@
+{
+  "title": "Password Setup",
+  "fields": {
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password"
+  },
+  "actions": {
+    "save": "Save",
+    "toggle": "Toggle visibility"
+  },
+  "errors": {
+    "requiredCurrent": "Enter your current password.",
+    "requiredNew": "Enter a new password.",
+    "minLength": "Password must be at least 10 characters.",
+    "requiredConfirm": "Confirm your new password.",
+    "mismatch": "Passwords do not match.",
+    "invalidCurrentPassword": "Current password is incorrect.",
+    "notAuthenticated": "You must be signed in to change password.",
+    "serverError": "An unexpected error occurred. Please try again."
+  },
+  "messages": {
+    "saved": "New password has been set."
+  }
+}

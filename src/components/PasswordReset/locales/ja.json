@@ -1,0 +1,25 @@
+{
+  "title": "パスワード設定",
+  "fields": {
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "新しいパスワード（確認）"
+  },
+  "actions": {
+    "save": "保存",
+    "toggle": "表示/非表示切替"
+  },
+  "errors": {
+    "requiredCurrent": "現在のパスワードを入力してください。",
+    "requiredNew": "新しいパスワードを入力してください。",
+    "minLength": "パスワードは10文字以上で入力してください。",
+    "requiredConfirm": "確認用パスワードを入力してください。",
+    "mismatch": "パスワードが一致しません。",
+    "invalidCurrentPassword": "現在のパスワードが正しくありません。",
+    "notAuthenticated": "パスワード変更にはサインインが必要です。",
+    "serverError": "エラーが発生しました。もう一度お試しください。"
+  },
+  "messages": {
+    "saved": "新しいパスワードを設定しました。"
+  }
+}
