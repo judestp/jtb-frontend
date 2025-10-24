@@ -21,11 +21,13 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
+    "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "bun test",
-      "vitest --run --passWithNoTests"
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
     ],
     "*.json": [
       "prettier --write"

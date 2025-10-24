@@ -6,4 +6,5 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 
 pnpm lint-staged # Run lint-staged commands in package.json
+pnpm lint:tsc
 pnpm test

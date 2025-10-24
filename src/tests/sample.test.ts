@@ -6,5 +6,3 @@ describe('math', () => {
     expect(result).toBe(2);
   });
 });
-
-
