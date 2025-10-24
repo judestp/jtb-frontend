@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm install && concurrently --raw \"next dev\" \"bun run --silent test\" \"bun run --silent lint:watch\"",
-    "test": "bun test --watch",
+    "dev": "pnpm install && concurrently --raw \"next dev\" \"bun run --silent test:watch\" \"bun run --silent lint:watch\"",
+    "test": "bun test --passWithNoTests",
+    "test:watch": "bun test --watch --passWithNoTests",
     "lint": "node -e \"(async()=>{const{spawn}=require('child_process'),r=(c,a)=>new Promise(x=>spawn(c,a,{stdio:'inherit'}).on('exit',e=>x(!e)));if((await Promise.all([r('bun',['run','--silent','lint:eslint']),r('bun',['run','--silent','lint:tsc'])])).every(Boolean))console.log('\\x1b[1m\\x1b[32m✔ Linting complete — no errors found.\\x1b[0m');else process.exit(1)})()\"",
     "lint:watch": "nodemon -q --watch src --ext js,ts,jsx,tsx --exec \"bun run --silent lint\"",
     "lint:tsc": "tsc --noEmit",
@@ -21,9 +22,9 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "bun run ",
       "eslint --fix",
       "prettier --write",
+      "bun test",
       "vitest --run --passWithNoTests"
     ],
     "*.json": [
