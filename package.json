@@ -6,11 +6,32 @@
   "scripts": {
     "dev": "pnpm install && concurrently --raw \"next dev\" \"bun run --silent test\" \"bun run --silent lint:watch\"",
     "test": "bun test --watch",
+    "lint": "node -e \"(async()=>{const{spawn}=require('child_process'),r=(c,a)=>new Promise(x=>spawn(c,a,{stdio:'inherit'}).on('exit',e=>x(!e)));if((await Promise.all([r('bun',['run','--silent','lint:eslint']),r('bun',['run','--silent','lint:tsc'])])).every(Boolean))console.log('\\x1b[1m\\x1b[32m✔ Linting complete — no errors found.\\x1b[0m');else process.exit(1)})()\"",
+    "lint:watch": "nodemon -q --watch src --ext js,ts,jsx,tsx --exec \"bun run --silent lint\"",
+    "lint:tsc": "tsc --noEmit",
+    "lint:eslint": "eslint src --report-unused-disable-directives --max-warnings 0",
     "build": "next build",
     "start": "next start",
-    "lint:eslint": "eslint src --report-unused-disable-directives --max-warnings 0",
-    "lint:tsc": "tsc --noEmit",
-    "lint:watch": "nodemon -q --watch src --ext js,ts,jsx,tsx --exec \"node -e \\\"const{spawn}=require('child_process'),r=(c,a)=>new Promise(x=>spawn(c,a,{stdio:'inherit'}).on('exit',e=>x(!e)));(async()=>{const[a,b]=await Promise.all([r('bun',['run','--silent','lint:eslint']),r('bun',['run','--silent','lint:tsc'])]);if(a&&b)console.log('\\\\x1b[1m\\\\x1b[32m✔ Linting complete — no errors found.\\\\x1b[0m');else process.exit(1)})();\\\"\""
+    "prepare": "husky"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node .husky/pre-commit"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "bun run ",
+      "eslint --fix",
+      "prettier --write",
+      "vitest --run --passWithNoTests"
+    ],
+    "*.json": [
+      "prettier --write"
+    ],
+    "*.{css,scss,sass}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4",
@@ -60,6 +81,7 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "nodemon": "^3.1.10",
