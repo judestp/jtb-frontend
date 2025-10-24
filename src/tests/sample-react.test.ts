@@ -4,6 +4,10 @@ import { render, screen } from '@testing-library/react';
 import { createElement } from 'react';
 import { describe, expect, it } from 'vitest';
 
+const stringVariable: number = 'Hello, World!';
+
+/*prettier-ignore*/ (($= stringVariable)=>{console.warn(["string","number"].includes(typeof $)?$:JSON.stringify($,null,4));})();
+
 interface IHelloProps {
   name: string;
 }
@@ -19,5 +23,3 @@ describe('Hello', () => {
     expect(heading).toBeInTheDocument();
   });
 });
-
-
