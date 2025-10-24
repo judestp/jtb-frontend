@@ -1,0 +1,17 @@
+{
+  "title": "Password  Setup",
+  "fields": {
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "actions": {
+    "save": "Save",
+    "toggle": "Toggle visibility"
+  },
+  "errors": {
+    "requiredPassword": "Password is required.",
+    "minLength": "Password must be at least 8 characters.",
+    "requiredConfirm": "Confirm your password.",
+    "mismatch": "Passwords do not match."
+  }
+}

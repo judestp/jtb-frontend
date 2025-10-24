@@ -9,6 +9,7 @@ import LanguageSelector from '@/components/LanguageSelector/LanguageSelector.tsx
 import QueryProvider from '@/providers/QueryProvider.tsx';
 import '@/i18n.ts';
 import LoginOrchestrator from '@/components/LoginOrchestrator/LoginOrchestrator.tsx';
+import PasswordSetup from '@/components/PasswordSetup/PasswordSetup.tsx';
 
 const pages = {
   public: {
@@ -17,6 +18,7 @@ const pages = {
   private: {
     UserSearch,
     UnlockPasswordReset,
+    PasswordSetup,
   },
 } as const;
 

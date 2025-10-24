@@ -1,0 +1,17 @@
+{
+  "title": "パスワード設定",
+  "fields": {
+    "password": "パスワード",
+    "confirmPassword": "パスワード（確認）"
+  },
+  "actions": {
+    "save": "保存",
+    "toggle": "表示/非表示切替"
+  },
+  "errors": {
+    "requiredPassword": "パスワードを入力してください。",
+    "minLength": "パスワードは8文字以上で入力してください。",
+    "requiredConfirm": "確認用パスワードを入力してください。",
+    "mismatch": "パスワードが一致しません。"
+  }
+}
