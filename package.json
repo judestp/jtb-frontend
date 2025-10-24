@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"next dev\" \"bun test --watch\" \"tsc --noEmit --watch\" \"bun lint\"",
+    "dev": "pnpm install && concurrently \"next dev\" \"bun test --watch\" \"tsc --noEmit --watch\" \"bun lint\"",
     "dev:legacy": "next dev",
     "test": "bun test --watch",
     "build": "next build",
@@ -45,6 +45,7 @@
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
+    "babel-plugin-react-compiler": "^1.0.0",
     "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
